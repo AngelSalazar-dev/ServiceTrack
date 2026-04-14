@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter, Manrope } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
+import { ThemeProvider } from '@/context/ThemeContext';
+import { LangProvider } from '@/context/LangContext';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -51,8 +53,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${manrope.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var lang = localStorage.getItem('lang') || 'en';
+                  document.documentElement.lang = lang;
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors duration-300">
-        <AuthProvider>{children}</AuthProvider>
+        <ThemeProvider>
+          <LangProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </LangProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

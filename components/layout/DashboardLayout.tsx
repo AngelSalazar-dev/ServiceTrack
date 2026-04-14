@@ -4,6 +4,8 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useLang } from '@/context/LangContext';
+import { ThemeLangToggle } from '@/components/ui/ThemeLangToggle';
 import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
@@ -23,14 +25,15 @@ interface DashboardLayoutProps {
 }
 
 const NAV_ITEMS = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/logs', icon: BookOpen, label: 'Ministry Logs' },
-  { href: '/reports', icon: BarChart3, label: 'Reports' },
-  { href: '/settings', icon: Settings, label: 'Settings' },
+  { href: '/dashboard', icon: LayoutDashboard, labelKey: 'nav_dashboard' },
+  { href: '/logs', icon: BookOpen, labelKey: 'nav_logs' },
+  { href: '/reports', icon: BarChart3, labelKey: 'nav_reports' },
+  { href: '/settings', icon: Settings, labelKey: 'nav_settings' },
 ];
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const { user, logout } = useAuth();
+  const { tr } = useLang();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
@@ -86,7 +89,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   onClick={() => setSidebarOpen(false)}
                 >
                   <Icon className="h-5 w-5" />
-                  {item.label}
+                  {tr(item.labelKey)}
                 </Link>
               );
             })}
@@ -108,7 +111,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
             >
               <LogOut className="h-4 w-4" />
-              Sign out
+              {tr('nav_sign_out')}
             </button>
           </div>
         </div>
@@ -119,17 +122,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Top bar (mobile) */}
         <header className="lg:hidden flex items-center h-16 px-4 border-b border-border bg-card">
           <button
-            className="p-2 rounded-lg hover:bg-accent mr-3"
+            className="p-2 rounded-lg hover:bg-accent mr-2"
             onClick={() => setSidebarOpen(true)}
           >
             <Menu className="h-6 w-6" />
           </button>
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2 flex-1">
             <div className="p-1.5 rounded-lg bg-gradient-to-br from-primary to-secondary">
               <Clock className="h-4 w-4 text-white" />
             </div>
             <span className="font-heading font-bold">ServiceTrack</span>
           </Link>
+          <ThemeLangToggle />
         </header>
 
         {/* Page content */}

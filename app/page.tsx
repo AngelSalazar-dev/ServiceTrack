@@ -2,7 +2,10 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
+import { useLang } from '@/context/LangContext';
 import { Button } from '@/components/ui/button';
+import { ThemeLangToggle } from '@/components/ui/ThemeLangToggle';
 import {
   Clock,
   BookOpen,
@@ -36,6 +39,7 @@ const containerVariants = {
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuth();
+  const { tr, lang } = useLang();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -46,19 +50,19 @@ export default function LandingPage() {
   }, []);
 
   const FEATURES = [
-    { icon: Clock, title: 'Track Hours Easily', description: 'Log your ministry activity with a simple, clean interface. Track hours, return visits, and Bible studies in seconds.' },
-    { icon: CalendarDays, title: 'Monthly Reports', description: 'Get a clear overview of your monthly activity with visual charts and summaries. Perfect for your S-21 report.' },
-    { icon: BarChart3, title: 'Visual Analytics', description: 'Beautiful charts show your weekly and monthly trends. See your ministry growth at a glance.' },
-    { icon: Shield, title: 'Private & Secure', description: 'Your data is encrypted and only accessible to you. We respect your privacy.' },
-    { icon: Heart, title: '100% Free', description: 'No subscriptions, no hidden fees. ServiceTrack is completely free for all publishers and pioneers.' },
-    { icon: Sparkles, title: 'AI-Ready', description: 'Built with future AI features in mind. Smart insights and suggestions coming soon.' },
+    { icon: Clock, title: tr('landing_feat_tracking'), description: tr('landing_feat_tracking_desc') },
+    { icon: CalendarDays, title: tr('landing_feat_reports'), description: tr('landing_feat_reports_desc') },
+    { icon: BarChart3, title: tr('landing_feat_analytics'), description: tr('landing_feat_analytics_desc') },
+    { icon: Shield, title: tr('landing_feat_privacy'), description: tr('landing_feat_privacy_desc') },
+    { icon: Heart, title: tr('landing_feat_free'), description: tr('landing_feat_free_desc') },
+    { icon: Sparkles, title: tr('landing_feat_ai'), description: tr('landing_feat_ai_desc') },
   ];
 
   const STATS = [
-    { value: '100%', label: 'Free Forever', icon: Heart },
-    { value: '0', label: 'Ads or Tracking', icon: Shield },
-    { value: '24/7', label: 'Available Anywhere', icon: Clock },
-    { value: '∞', label: 'Unlimited Logs', icon: CalendarDays },
+    { value: '100%', label: tr('landing_stat_free'), icon: Heart },
+    { value: '0', label: tr('landing_stat_ads'), icon: Shield },
+    { value: '24/7', label: tr('landing_stat_anywhere'), icon: Clock },
+    { value: '∞', label: tr('landing_stat_unlimited'), icon: CalendarDays },
   ];
 
   return (
@@ -79,25 +83,24 @@ export default function LandingPage() {
 
           <nav className="hidden md:flex items-center gap-8">
             <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Features
+              {tr('landing_nav_features')}
             </Link>
             <Link href="#stats" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              About
+              {tr('landing_nav_about')}
             </Link>
+            <ThemeLangToggle />
             {isAuthenticated ? (
-              <>
-                <Link href="/dashboard">
-                  <Button variant="ghost">Dashboard</Button>
-                </Link>
-              </>
+              <Link href="/dashboard">
+                <Button variant="ghost">{tr('nav_dashboard')}</Button>
+              </Link>
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost">Sign In</Button>
+                  <Button variant="ghost">{tr('landing_sign_in')}</Button>
                 </Link>
                 <Link href="/register">
                   <Button>
-                    Get Started Free
+                    {tr('landing_cta_start')}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
@@ -115,23 +118,24 @@ export default function LandingPage() {
 
         {isMobileMenuOpen && (
           <div className="md:hidden border-b border-border bg-background px-4 py-4 space-y-2">
+            <ThemeLangToggle />
             <Link href="#features" className="block py-2 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-              Features
+              {tr('landing_nav_features')}
             </Link>
             <Link href="#stats" className="block py-2 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-              About
+              {tr('landing_nav_about')}
             </Link>
             {isAuthenticated ? (
               <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="w-full">Dashboard</Button>
+                <Button className="w-full">{tr('nav_dashboard')}</Button>
               </Link>
             ) : (
               <>
                 <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button variant="outline" className="w-full">Sign In</Button>
+                  <Button variant="outline" className="w-full">{tr('landing_sign_in')}</Button>
                 </Link>
                 <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full">Get Started Free</Button>
+                  <Button className="w-full">{tr('landing_cta_start')}</Button>
                 </Link>
               </>
             )}
@@ -157,26 +161,26 @@ export default function LandingPage() {
             <motion.div variants={itemVariants}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary">
                 <Sparkles className="h-4 w-4" />
-                100% Free for all Jehovah&apos;s Witnesses publishers
+                {tr('landing_badge')}
               </div>
             </motion.div>
 
             <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl md:text-7xl font-heading font-extrabold tracking-tight leading-[1.05]">
-              Track your ministry with{' '}
+              {tr('landing_title_part1')}{' '}
               <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                clarity and simplicity
+                {tr('landing_title_part2')}
               </span>
             </motion.h1>
 
             <motion.p variants={itemVariants} className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              A beautiful, free ministry activity tracker for Jehovah&apos;s Witnesses publishers and pioneers. Log hours, return visits, and Bible studies — all in one place.
+              {tr('landing_subtitle')}
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
               {isAuthenticated ? (
                 <Link href="/dashboard">
                   <Button size="lg" className="h-14 px-8 text-base">
-                    Go to Dashboard
+                    {tr('landing_cta_dashboard')}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
@@ -184,13 +188,13 @@ export default function LandingPage() {
                 <>
                   <Link href="/register">
                     <Button size="lg" className="h-14 px-8 text-base">
-                      Start Tracking Free
+                      {tr('landing_cta_start')}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                   <Link href="/login">
                     <Button size="lg" variant="outline" className="h-14 px-8 text-base">
-                      Sign In
+                      {tr('landing_sign_in')}
                     </Button>
                   </Link>
                 </>
@@ -220,9 +224,9 @@ export default function LandingPage() {
       <section id="features" className="py-20 md:py-32 bg-accent/30">
         <div className="container-servicetrack">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold tracking-tight">Everything you need, nothing you don&apos;t</h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold tracking-tight">{tr('landing_features_title')}</h2>
             <p className="text-lg text-muted-foreground">
-              ServiceTrack is designed specifically for Jehovah&apos;s Witnesses publishers. Simple, private, and completely free.
+              {tr('landing_features_desc')}
             </p>
           </div>
 
@@ -253,21 +257,16 @@ export default function LandingPage() {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-sm font-medium text-secondary">
                 <BookOpen className="h-4 w-4" />
-                S-21 Report Ready
+                {tr('landing_s21_badge')}
               </div>
               <h2 className="text-3xl md:text-4xl font-heading font-bold tracking-tight">
-                Your monthly reports, simplified
+                {tr('landing_s21_title')}
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                ServiceTrack automatically calculates your monthly totals for hours, return visits, and Bible studies. When it&apos;s time to submit your S-21 card, everything is ready.
+                {tr('landing_s21_desc')}
               </p>
               <ul className="space-y-3">
-                {[
-                  'Automatic monthly totals calculation',
-                  'Weekly activity charts and trends',
-                  'Calendar view of your ministry days',
-                  'Export and print your summary',
-                ].map((item, i) => (
+                {[tr('landing_s21_feat1'), tr('landing_s21_feat2'), tr('landing_s21_feat3'), tr('landing_s21_feat4')].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm">
                     <ChevronRight className="h-4 w-4 text-primary flex-shrink-0" />
                     {item}
@@ -282,19 +281,19 @@ export default function LandingPage() {
               <div className="relative rounded-2xl border border-border bg-card p-8 shadow-xl">
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="rounded-xl bg-primary/10 p-4">
-                    <div className="text-sm text-muted-foreground">Total Hours</div>
+                    <div className="text-sm text-muted-foreground">{tr('dash_total_hours')}</div>
                     <div className="text-3xl font-bold font-heading">42.5h</div>
                   </div>
                   <div className="rounded-xl bg-secondary/10 p-4">
-                    <div className="text-sm text-muted-foreground">Bible Studies</div>
+                    <div className="text-sm text-muted-foreground">{tr('dash_bible_studies')}</div>
                     <div className="text-3xl font-bold font-heading">8</div>
                   </div>
                   <div className="rounded-xl bg-emerald-500/10 p-4">
-                    <div className="text-sm text-muted-foreground">Return Visits</div>
+                    <div className="text-sm text-muted-foreground">{tr('dash_return_visits')}</div>
                     <div className="text-3xl font-bold font-heading">24</div>
                   </div>
                   <div className="rounded-xl bg-amber-500/10 p-4">
-                    <div className="text-sm text-muted-foreground">Days in Field</div>
+                    <div className="text-sm text-muted-foreground">{tr('dash_days_field')}</div>
                     <div className="text-3xl font-bold font-heading">18</div>
                   </div>
                 </div>
@@ -314,22 +313,22 @@ export default function LandingPage() {
         <div className="container-servicetrack relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-8">
             <h2 className="text-3xl md:text-5xl font-heading font-extrabold tracking-tight">
-              Start tracking your ministry today
+              {tr('landing_cta_bottom_title')}
             </h2>
             <p className="text-lg md:text-xl text-white/80 leading-relaxed">
-              Join publishers and pioneers who use ServiceTrack to keep their ministry records organized. No cost, no ads, no limits.
+              {tr('landing_cta_bottom_desc')}
             </p>
             {isAuthenticated ? (
               <Link href="/dashboard">
                 <Button size="lg" variant="secondary" className="h-14 px-8 text-base bg-white text-primary hover:bg-white/90">
-                  Go to Dashboard
+                  {tr('landing_cta_go')}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             ) : (
               <Link href="/register">
                 <Button size="lg" variant="secondary" className="h-14 px-8 text-base bg-white text-primary hover:bg-white/90">
-                  Create Free Account
+                  {tr('landing_cta_create')}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -349,7 +348,7 @@ export default function LandingPage() {
               <span className="font-heading font-bold">ServiceTrack</span>
             </div>
             <p className="text-sm text-muted-foreground text-center">
-              Free ministry activity tracker for Jehovah&apos;s Witnesses publishers. Not affiliated with any organization.
+              {tr('landing_footer_desc')}
             </p>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <Link href="/" className="hover:text-foreground transition-colors">Privacy</Link>
