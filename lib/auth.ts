@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import prisma from './prisma';
 
@@ -86,6 +86,34 @@ export function clearSessionCookie(response: NextResponse) {
 export async function getCurrentUser(): Promise<{ id: string; name: string; email: string; congregation: string | null; createdAt: string } | null> {
   const cookieStore = cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
+
+  if (!token) return null;
+
+  const payload = await verifyJWT(token);
+  if (!payload) return null;
+
+  const user = await prisma.user.findUnique({
+    where: { id: payload.userId },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      congregation: true,
+      createdAt: true,
+    },
+  });
+
+  if (!user) return null;
+
+  return {
+    ...user,
+    createdAt: user.createdAt.toISOString(),
+  };
+}
+
+// Get authenticated user from NextRequest (for API routes)
+export async function getAuthUser(request: NextRequest): Promise<{ id: string; name: string; email: string; congregation: string | null; createdAt: string } | null> {
+  const token = request.cookies.get(COOKIE_NAME)?.value;
 
   if (!token) return null;
 

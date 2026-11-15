@@ -17,6 +17,7 @@ import {
   X,
   LogOut,
   User,
+  MessageSquare,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -28,6 +29,7 @@ const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'nav_dashboard' },
   { href: '/logs', icon: BookOpen, labelKey: 'nav_logs' },
   { href: '/reports', icon: BarChart3, labelKey: 'nav_reports' },
+  { href: '/chat', icon: MessageSquare, labelKey: 'nav_chat' },
   { href: '/settings', icon: Settings, labelKey: 'nav_settings' },
 ];
 
@@ -106,6 +108,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
               </div>
             </div>
+            <ThemeLangToggle />
             <button
               onClick={logout}
               className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"

@@ -23,6 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local env
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -41,3 +42,5 @@ Thumbs.db
 !.env.example
 
 .vercel
+
+.env

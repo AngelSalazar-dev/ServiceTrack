@@ -90,7 +90,7 @@ function LoginForm() {
         <p className="text-sm text-center text-muted-foreground">
           Don&apos;t have an account?{' '}
           <Link href="/register" className="text-primary hover:underline font-medium">
-            Sign up free
+            Sign up
           </Link>
         </p>
       </CardFooter>

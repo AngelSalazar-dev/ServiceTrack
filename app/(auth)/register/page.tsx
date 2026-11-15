@@ -10,8 +10,11 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clock, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
+import { useLang } from '@/context/LangContext';
+
 export default function RegisterPage() {
   const { register } = useAuth();
+  const { tr } = useLang();
   const router = useRouter();
 
   const [name, setName] = React.useState('');
@@ -61,8 +64,8 @@ export default function RegisterPage() {
 
         <Card>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Create your account</CardTitle>
-            <CardDescription>Start tracking your ministry activity for free</CardDescription>
+            <CardTitle className="text-2xl">{tr('auth_create_account')}</CardTitle>
+            <CardDescription>{tr('auth_create_desc')}</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
@@ -73,7 +76,7 @@ export default function RegisterPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">{tr('auth_full_name')}</Label>
                 <Input
                   id="name"
                   type="text"
@@ -86,7 +89,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{tr('auth_email')}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -99,11 +102,11 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="congregation">Congregation (optional)</Label>
+                <Label htmlFor="congregation">{tr('auth_congregation')}</Label>
                 <Input
                   id="congregation"
                   type="text"
-                  placeholder="Your congregation name"
+                  placeholder={tr('auth_congregation_placeholder')}
                   value={congregation}
                   onChange={(e) => setCongregation(e.target.value)}
                   autoComplete="organization"
@@ -111,7 +114,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{tr('auth_password')}</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -130,11 +133,11 @@ export default function RegisterPage() {
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
-                <p className="text-xs text-muted-foreground">At least 8 characters</p>
+                <p className="text-xs text-muted-foreground">{tr('auth_password_hint')}</p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="confirmPassword">{tr('auth_confirm_password')}</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -149,13 +152,13 @@ export default function RegisterPage() {
 
             <CardFooter className="flex flex-col space-y-3">
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Creating account...' : 'Create free account'}
+                {isLoading ? tr('auth_creating') : tr('auth_create_btn')}
               </Button>
 
               <p className="text-sm text-center text-muted-foreground">
-                Already have an account?{' '}
+                {tr('auth_has_account')}{' '}
                 <Link href="/login" className="text-primary hover:underline font-medium">
-                  Sign in
+                  {tr('auth_sign_in_btn')}
                 </Link>
               </p>
             </CardFooter>
@@ -164,7 +167,7 @@ export default function RegisterPage() {
 
         <Link href="/" className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="h-4 w-4" />
-          Back to home
+          {tr('auth_back_home')}
         </Link>
       </div>
     </div>

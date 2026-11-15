@@ -27,9 +27,12 @@ import {
 } from 'recharts';
 import { formatHours } from '@/lib/utils';
 
+import { useLang } from '@/context/LangContext';
+
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(142, 76%, 47%)', 'hsl(38, 92%, 50%)'];
 
 export default function ReportsPage() {
+  const { tr } = useLang();
   const [monthlyData, setMonthlyData] = React.useState<any[]>([]);
   const [stats, setStats] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -65,18 +68,18 @@ export default function ReportsPage() {
         {/* Header */}
         <div className="flex items-center justify-between print:hidden">
           <div>
-            <h1 className="text-3xl font-heading font-bold tracking-tight">Monthly Report</h1>
-            <p className="text-muted-foreground mt-1">Your ministry activity summary</p>
+            <h1 className="text-3xl font-heading font-bold tracking-tight">{tr('reports_title')}</h1>
+            <p className="text-muted-foreground mt-1">{tr('reports_desc')}</p>
           </div>
           <Button onClick={handlePrint}>
             <Printer className="mr-2 h-4 w-4" />
-            Print Report
+            {tr('reports_print')}
           </Button>
         </div>
 
         {/* Print Header (only visible when printing) */}
         <div className="hidden print:block text-center mb-6">
-          <h1 className="text-2xl font-bold">ServiceTrack - Monthly Ministry Report</h1>
+          <h1 className="text-2xl font-bold">{tr('reports_print_header')}</h1>
           <p className="text-muted-foreground">{new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
         </div>
 
@@ -89,7 +92,7 @@ export default function ReportsPage() {
                   <Clock className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Total Hours</p>
+                  <p className="text-xs text-muted-foreground">{tr('reports_total_hours')}</p>
                   <p className="text-xl font-bold">{isLoading ? '...' : formatHours(stats?.totalHours || 0)}</p>
                 </div>
               </div>
@@ -102,7 +105,7 @@ export default function ReportsPage() {
                   <BookOpen className="h-5 w-5 text-secondary" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Bible Studies</p>
+                  <p className="text-xs text-muted-foreground">{tr('reports_bible_studies')}</p>
                   <p className="text-xl font-bold">{isLoading ? '...' : stats?.totalBibleStudies || 0}</p>
                 </div>
               </div>
@@ -115,7 +118,7 @@ export default function ReportsPage() {
                   <Users className="h-5 w-5 text-emerald-600" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Return Visits</p>
+                  <p className="text-xs text-muted-foreground">{tr('reports_return_visits')}</p>
                   <p className="text-xl font-bold">{isLoading ? '...' : stats?.totalReturnVisits || 0}</p>
                 </div>
               </div>
@@ -128,7 +131,7 @@ export default function ReportsPage() {
                   <CalendarDays className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Days in Field</p>
+                  <p className="text-xs text-muted-foreground">{tr('reports_days_field')}</p>
                   <p className="text-xl font-bold">{isLoading ? '...' : stats?.totalLogs || 0}</p>
                 </div>
               </div>
@@ -143,7 +146,7 @@ export default function ReportsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                Hours by Week
+                {tr('reports_hours_weekly')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -170,7 +173,7 @@ export default function ReportsPage() {
                   <div className="flex items-center justify-center h-full text-muted-foreground">
                     <div className="text-center">
                       <BarChart3 className="h-10 w-10 mx-auto mb-2 opacity-30" />
-                      <p className="text-sm">No data yet</p>
+                      <p className="text-sm">{tr('reports_no_data')}</p>
                     </div>
                   </div>
                 )}
@@ -183,7 +186,7 @@ export default function ReportsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <BarChart3 className="h-5 w-5 text-secondary" />
-                Activity Distribution
+                {tr('reports_activity_dist')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -193,9 +196,9 @@ export default function ReportsPage() {
                     <PieChart>
                       <Pie
                         data={[
-                          { name: 'Hours', value: stats.totalHours },
-                          { name: 'Return Visits', value: stats.totalReturnVisits },
-                          { name: 'Bible Studies', value: stats.totalBibleStudies },
+                          { name: tr('reports_pie_hours'), value: stats.totalHours },
+                          { name: tr('reports_pie_visits'), value: stats.totalReturnVisits },
+                          { name: tr('reports_pie_studies'), value: stats.totalBibleStudies },
                         ]}
                         cx="50%"
                         cy="50%"
@@ -215,7 +218,7 @@ export default function ReportsPage() {
                 ) : (
                   <div className="text-center text-muted-foreground">
                     <BarChart3 className="h-10 w-10 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">No data yet</p>
+                    <p className="text-sm">{tr('reports_no_data')}</p>
                   </div>
                 )}
               </div>
@@ -223,35 +226,35 @@ export default function ReportsPage() {
           </Card>
         </div>
 
-        {/* S-21 Summary Table */}
+        {/* Summary Table */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">S-21 Report Summary</CardTitle>
+            <CardTitle className="text-lg">{tr('reports_summary_title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Category</th>
-                    <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">This Month</th>
+                    <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">{tr('reports_category')}</th>
+                    <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">{tr('reports_this_month')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-border">
-                    <td className="py-3 px-4 font-medium">Hours in Ministry</td>
+                    <td className="py-3 px-4 font-medium">{tr('reports_hours_in_ministry')}</td>
                     <td className="py-3 px-4 text-right font-bold">{formatHours(stats?.totalHours || 0)}</td>
                   </tr>
                   <tr className="border-b border-border">
-                    <td className="py-3 px-4 font-medium">Return Visits</td>
+                    <td className="py-3 px-4 font-medium">{tr('reports_return_visits_conducted')}</td>
                     <td className="py-3 px-4 text-right">{stats?.totalReturnVisits || 0}</td>
                   </tr>
                   <tr className="border-b border-border">
-                    <td className="py-3 px-4 font-medium">Bible Studies Conducted</td>
+                    <td className="py-3 px-4 font-medium">{tr('reports_bible_studies_conducted')}</td>
                     <td className="py-3 px-4 text-right">{stats?.totalBibleStudies || 0}</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4 font-medium">Number of Log Entries</td>
+                    <td className="py-3 px-4 font-medium">{tr('reports_log_count')}</td>
                     <td className="py-3 px-4 text-right">{stats?.totalLogs || 0}</td>
                   </tr>
                 </tbody>
@@ -260,7 +263,7 @@ export default function ReportsPage() {
 
             {stats && stats.averageHoursPerLog > 0 && (
               <p className="mt-4 text-sm text-muted-foreground">
-                Average hours per log entry: <strong>{stats.averageHoursPerLog.toFixed(2)}h</strong>
+                {tr('reports_avg_per_log')} <strong>{stats.averageHoursPerLog.toFixed(2)}h</strong>
               </p>
             )}
           </CardContent>

@@ -35,8 +35,11 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } },
 };
 
+import { useLang } from '@/context/LangContext';
+
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { tr } = useLang();
   const router = useRouter();
   const [stats, setStats] = React.useState<MonthlyStats | null>(null);
   const [weeklyData, setWeeklyData] = React.useState<WeeklyData[]>([]);
@@ -76,15 +79,15 @@ export default function DashboardPage() {
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-heading font-bold tracking-tight">
-              Welcome, {user?.name?.split(' ')[0]} 👋
+              {tr('dash_welcome')}, {user?.name?.split(' ')[0]} 👋
             </h1>
             <p className="text-muted-foreground mt-1">
-              Here&apos;s a summary of your ministry activity
+              {tr('dash_summary')}
             </p>
           </div>
           <Button onClick={() => router.push('/logs')}>
             <Plus className="mr-2 h-4 w-4" />
-            Add Log Entry
+            {tr('logs_add_entry')}
           </Button>
         </motion.div>
 
@@ -92,25 +95,25 @@ export default function DashboardPage() {
         <motion.div variants={itemVariants} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             icon={<Clock className="h-5 w-5" />}
-            title="Total Hours"
+            title={tr('dash_total_hours')}
             value={isLoading ? '...' : formatHours(stats?.totalHours || 0)}
             color="primary"
           />
           <StatCard
             icon={<BookOpen className="h-5 w-5" />}
-            title="Bible Studies"
+            title={tr('dash_bible_studies')}
             value={isLoading ? '...' : String(stats?.totalBibleStudies || 0)}
             color="secondary"
           />
           <StatCard
             icon={<Users className="h-5 w-5" />}
-            title="Return Visits"
+            title={tr('dash_return_visits')}
             value={isLoading ? '...' : String(stats?.totalReturnVisits || 0)}
             color="emerald"
           />
           <StatCard
             icon={<CalendarDays className="h-5 w-5" />}
-            title="Days in Field"
+            title={tr('dash_days_field')}
             value={isLoading ? '...' : String(stats?.totalLogs || 0)}
             color="amber"
           />
@@ -124,7 +127,7 @@ export default function DashboardPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-primary" />
-                  Weekly Activity
+                  {tr('dash_weekly_activity')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -164,8 +167,8 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-center h-full text-muted-foreground">
                       <div className="text-center">
                         <TrendingUp className="h-12 w-12 mx-auto mb-2 opacity-30" />
-                        <p className="text-sm font-medium">No activity data yet</p>
-                        <p className="text-xs mt-1">Start logging your ministry to see charts</p>
+                        <p className="text-sm font-medium">{tr('dash_no_activity')}</p>
+                        <p className="text-xs mt-1">{tr('dash_no_activity_desc')}</p>
                       </div>
                     </div>
                   )}
@@ -178,7 +181,7 @@ export default function DashboardPage() {
           <motion.div variants={itemVariants}>
             <Card className="h-full">
               <CardHeader>
-                <CardTitle className="text-lg">Recent Activity</CardTitle>
+                <CardTitle className="text-lg">{tr('dash_recent_activity')}</CardTitle>
               </CardHeader>
               <CardContent>
                 {isLoading ? (
@@ -194,7 +197,7 @@ export default function DashboardPage() {
                         <div>
                           <p className="text-sm font-medium">{formatDate(log.date)}</p>
                           <p className="text-xs text-muted-foreground">
-                            {formatHours(log.hours)} · {log.bibleStudies} studies
+                            {formatHours(log.hours)} · {log.bibleStudies} {tr('dash_sessions_unit')}
                           </p>
                         </div>
                         <ChevronRight className="h-4 w-4 text-muted-foreground" />
@@ -204,9 +207,9 @@ export default function DashboardPage() {
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
                     <BookOpen className="h-10 w-10 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">No logs yet</p>
+                    <p className="text-sm">{tr('dash_no_logs')}</p>
                     <Button variant="link" className="mt-2" onClick={() => router.push('/logs')}>
-                      Add your first log
+                      {tr('dash_add_first')}
                     </Button>
                   </div>
                 )}
@@ -218,20 +221,20 @@ export default function DashboardPage() {
         {/* Quick Actions */}
         <motion.div variants={itemVariants} className="grid sm:grid-cols-3 gap-4">
           <QuickActionCard
-            title="Add Ministry Log"
-            description="Record your hours, return visits, and Bible studies"
+            title={tr('dash_action_add')}
+            description={tr('dash_action_add_desc')}
             icon={<Plus className="h-5 w-5" />}
             href="/logs"
           />
           <QuickActionCard
-            title="View Reports"
-            description="See your monthly totals and activity trends"
+            title={tr('dash_action_reports')}
+            description={tr('dash_action_reports_desc')}
             icon={<BarChart3 className="h-5 w-5" />}
             href="/reports"
           />
           <QuickActionCard
-            title="Update Profile"
-            description="Manage your account and congregation details"
+            title={tr('dash_action_profile')}
+            description={tr('dash_action_profile_desc')}
             icon={<CalendarDays className="h-5 w-5" />}
             href="/settings"
           />

@@ -29,7 +29,10 @@ import {
 import { formatHours, formatDate } from '@/lib/utils';
 import type { Log } from '@/types';
 
+import { useLang } from '@/context/LangContext';
+
 export default function LogsPage() {
+  const { tr } = useLang();
   const [logs, setLogs] = React.useState<Log[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -152,12 +155,12 @@ export default function LogsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-heading font-bold tracking-tight">Ministry Logs</h1>
-            <p className="text-muted-foreground mt-1">Track your hours, return visits, and Bible studies</p>
+            <h1 className="text-3xl font-heading font-bold tracking-tight">{tr('logs_title')}</h1>
+            <p className="text-muted-foreground mt-1">{tr('logs_desc')}</p>
           </div>
           <Button onClick={openAddDialog}>
             <Plus className="mr-2 h-4 w-4" />
-            Add Entry
+            {tr('logs_add_entry')}
           </Button>
         </div>
 
@@ -170,7 +173,7 @@ export default function LogsPage() {
                   <Clock className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Hours</p>
+                  <p className="text-sm text-muted-foreground">{tr('logs_total_hours')}</p>
                   <p className="text-2xl font-bold">{formatHours(totalHours)}</p>
                 </div>
               </div>
@@ -183,7 +186,7 @@ export default function LogsPage() {
                   <BookOpen className="h-5 w-5 text-secondary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Bible Studies</p>
+                  <p className="text-sm text-muted-foreground">{tr('logs_bible_studies')}</p>
                   <p className="text-2xl font-bold">{totalBibleStudies}</p>
                 </div>
               </div>
@@ -196,7 +199,7 @@ export default function LogsPage() {
                   <Users className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Return Visits</p>
+                  <p className="text-sm text-muted-foreground">{tr('logs_return_visits')}</p>
                   <p className="text-2xl font-bold">{totalReturnVisits}</p>
                 </div>
               </div>
@@ -209,7 +212,7 @@ export default function LogsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CalendarDays className="h-5 w-5" />
-              Activity Log
+              {tr('logs_activity_log')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -224,12 +227,12 @@ export default function LogsPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Date</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Hours</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Return Visits</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Bible Studies</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground hidden sm:table-cell">Notes</th>
-                      <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">Actions</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">{tr('logs_date')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">{tr('logs_hours')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">{tr('logs_return_visits')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">{tr('logs_bible_studies')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground hidden sm:table-cell">{tr('logs_notes')}</th>
+                      <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">{tr('logs_actions')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -272,11 +275,11 @@ export default function LogsPage() {
             ) : (
               <div className="text-center py-12 text-muted-foreground">
                 <CalendarDays className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                <p className="font-medium">No ministry logs yet</p>
-                <p className="text-sm mt-1">Start tracking your activity by adding your first entry</p>
+                <p className="font-medium">{tr('logs_no_logs')}</p>
+                <p className="text-sm mt-1">{tr('logs_no_logs_desc')}</p>
                 <Button className="mt-4" onClick={openAddDialog}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Add First Entry
+                  {tr('logs_first')}
                 </Button>
               </div>
             )}
@@ -291,15 +294,15 @@ export default function LogsPage() {
           <DialogContent>
             <form onSubmit={handleSubmit}>
               <DialogHeader>
-                <DialogTitle>{editingLog ? 'Edit Log Entry' : 'Add Ministry Log'}</DialogTitle>
+                <DialogTitle>{editingLog ? tr('logs_edit') : tr('logs_add')}</DialogTitle>
                 <DialogDescription>
-                  {editingLog ? 'Update your ministry activity record' : 'Record your ministry activity for the day'}
+                  {editingLog ? tr('logs_edit_desc') : tr('logs_add_desc')}
                 </DialogDescription>
               </DialogHeader>
 
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="date">Date</Label>
+                  <Label htmlFor="date">{tr('logs_date')}</Label>
                   <Input
                     id="date"
                     type="date"
@@ -311,7 +314,7 @@ export default function LogsPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="hours">Hours</Label>
+                    <Label htmlFor="hours">{tr('logs_hours')}</Label>
                     <Input
                       id="hours"
                       type="number"
@@ -324,7 +327,7 @@ export default function LogsPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="returnVisits">Return Visits</Label>
+                    <Label htmlFor="returnVisits">{tr('logs_return_visits')}</Label>
                     <Input
                       id="returnVisits"
                       type="number"
@@ -337,7 +340,7 @@ export default function LogsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="bibleStudies">Bible Studies</Label>
+                  <Label htmlFor="bibleStudies">{tr('logs_bible_studies')}</Label>
                   <Input
                     id="bibleStudies"
                     type="number"
@@ -349,10 +352,10 @@ export default function LogsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="notes">Notes (optional)</Label>
+                  <Label htmlFor="notes">{tr('logs_notes')}</Label>
                   <Textarea
                     id="notes"
-                    placeholder="Any notes about your ministry today..."
+                    placeholder={tr('logs_notes_placeholder')}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
@@ -362,9 +365,9 @@ export default function LogsPage() {
 
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                  Cancel
+                  {tr('logs_cancel')}
                 </Button>
-                <Button type="submit">{editingLog ? 'Update' : 'Save'}</Button>
+                <Button type="submit">{editingLog ? tr('logs_update') : tr('logs_save')}</Button>
               </DialogFooter>
             </form>
           </DialogContent>
@@ -374,17 +377,17 @@ export default function LogsPage() {
         <Dialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Delete Log Entry</DialogTitle>
+              <DialogTitle>{tr('logs_delete')}</DialogTitle>
               <DialogDescription>
-                Are you sure you want to delete this log entry? This action cannot be undone.
+                {tr('logs_delete_desc')}
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <Button variant="outline" onClick={() => setDeleteId(null)}>
-                Cancel
+                {tr('logs_cancel')}
               </Button>
               <Button variant="destructive" onClick={() => deleteId && handleDelete(deleteId)}>
-                Delete
+                {tr('logs_delete_btn')}
               </Button>
             </DialogFooter>
           </DialogContent>

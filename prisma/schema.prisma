@@ -17,6 +17,8 @@ model User {
   password     String   @map("password_hash")
   congregation String?
   logs         Log[]
+  chatConversations ChatConversation[]
+  chatMessages ChatMessage[]
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
@@ -39,4 +41,32 @@ model Log {
   @@map("logs")
   @@index([userId, date])
   @@index([date])
+}
+
+model ChatConversation {
+  id        String      @id @default(uuid())
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String      @map("user_id")
+  title     String?
+  messages  ChatMessage[]
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  @@map("chat_conversations")
+  @@index([userId])
+}
+
+model ChatMessage {
+  id             String           @id @default(uuid())
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String           @map("user_id")
+  conversation   ChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversationId String           @map("conversation_id")
+  role           String // 'user' or 'assistant'
+  content        String           @db.Text
+  createdAt      DateTime         @default(now()) @map("created_at")
+
+  @@map("chat_messages")
+  @@index([conversationId])
+  @@index([userId])
 }

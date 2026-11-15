@@ -1,6 +1,6 @@
-# ServiceTrack — Ministry Activity Tracker
+# ServiceTrack — Activity Tracker
 
-> A free, beautiful SaaS web application for Jehovah's Witnesses publishers and pioneers to track their ministry activity.
+> A beautiful SaaS web application to track your activities, hours, and goals.
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
@@ -11,12 +11,11 @@
 
 - **🔐 Secure Authentication** — JWT cookie-based auth with bcrypt password hashing
 - **📊 Dashboard** — Real-time stats, weekly activity charts, recent activity feed
-- **📝 Ministry Logs** — Full CRUD for logging hours, return visits, Bible studies
+- **📝 Activity Logs** — Full CRUD for logging hours, follow-ups, and sessions
 - **📈 Reports** — Monthly summaries, visual charts (bar + pie), print-to-PDF export
-- **⚙️ Settings** — Profile management (name, congregation)
+- **⚙️ Settings** — Profile management and preferences
 - **🎨 Modern UI** — Tailwind CSS + shadcn/ui components, dark/light mode ready
 - **📱 Responsive** — Works on mobile and desktop
-- **💸 100% Free** — No payments, no subscriptions, no ads
 
 ## 🧩 Tech Stack
 
@@ -43,7 +42,7 @@ servicetrack-app/
 │   │   └── register/page.tsx    # Registration page
 │   ├── (dashboard)/
 │   │   ├── dashboard/page.tsx   # Main dashboard with charts
-│   │   ├── logs/page.tsx        # Ministry logs CRUD
+│   │   ├── logs/page.tsx        # Activity logs CRUD
 │   │   ├── reports/page.tsx     # Monthly reports + charts
 │   │   └── settings/page.tsx    # Profile settings
 │   ├── api/
@@ -233,11 +232,11 @@ Built with shadcn/ui patterns:
 |------|-------|-------------|
 | Landing | `/` | Hero, features, CTA sections |
 | Login | `/login` | Email + password sign in |
-| Register | `/register` | Create account (name, email, congregation, password) |
+| Register | `/register` | Create account |
 | Dashboard | `/dashboard` | Stats cards, weekly chart, recent activity |
 | Logs | `/logs` | Full CRUD table with add/edit modal |
 | Reports | `/reports` | Monthly summary, bar/pie charts, print export |
-| Settings | `/settings` | Update name and congregation |
+| Settings | `/settings` | Update preferences |
 
 ## 🔄 API Routes
 
@@ -249,24 +248,24 @@ Built with shadcn/ui patterns:
 - `PUT /api/auth/profile` — Update profile
 
 ### Logs
-- `GET /api/logs` — Get all logs (with pagination + date filters)
+- `GET /api/logs` — Get all logs
 - `POST /api/logs` — Create log entry
 - `GET /api/logs/[id]` — Get single log
 - `PUT /api/logs/[id]` — Update log entry
 - `DELETE /api/logs/[id]` — Delete log entry
 
 ### Stats
-- `GET /api/stats?type=weekly|monthly` — Get dashboard statistics
+- `GET /api/stats?type=weekly|monthly` — Get statistics
 
 ## 🚧 Future Enhancements
 
-- [ ] Calendar view for ministry logs
-- [ ] AI-powered ministry insights
-- [ ] Team/congregation leaderboards
+- [ ] Calendar view for activity logs
+- [ ] AI-powered activity insights
+- [ ] Team/organization leaderboards
 - [ ] Export to CSV/Excel
 - [ ] Mobile app (React Native)
-- [ ] Pioneer hour tracking
-- [ ] Territory management
+- [ ] Hour tracking for specific goals
+- [ ] Task management
 - [ ] Notification reminders
 
 ## 📄 License
@@ -275,8 +274,8 @@ MIT
 
 ## 🙏 Acknowledgments
 
-Built with patterns from NutriFlow, a health tracking application. ServiceTrack is designed specifically for Jehovah's Witnesses publishers to simplify ministry record keeping.
+Built with patterns from NutriFlow. ServiceTrack is designed to simplify activity record keeping and goal tracking.
 
 ---
 
-**ServiceTrack** — Track your ministry with clarity and simplicity.
+**ServiceTrack** — Track your activity with clarity and simplicity.

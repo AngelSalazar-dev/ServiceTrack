@@ -19,17 +19,17 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://servicetrack.vercel.app'),
   title: {
-    default: 'ServiceTrack — Track Your Ministry Activity',
+    default: 'ServiceTrack — Track Your Activity',
     template: '%s | ServiceTrack',
   },
-  description: 'A simple and beautiful ministry activity tracker for Jehovah\'s Witnesses publishers and pioneers.',
-  keywords: ['JW', 'ministry', 'publisher', 'pioneer', 'field service', 'hours', 'Bible studies', 'return visits'],
+  description: 'A simple and beautiful activity tracker to manage your goals and time.',
+  keywords: ['service', 'activity', 'tracking', 'goals', 'hours', 'sessions', 'follow-ups'],
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'ServiceTrack — Track Your Ministry Activity',
-    description: 'A simple and beautiful ministry activity tracker for Jehovah\'s Witnesses publishers and pioneers.',
+    title: 'ServiceTrack — Track Your Activity',
+    description: 'A simple and beautiful activity tracker to manage your goals and time.',
     siteName: 'ServiceTrack',
     images: [{
       url: '/og-image.jpg',
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ServiceTrack — Track Your Ministry Activity',
-    description: 'A simple and beautiful ministry activity tracker for Jehovah\'s Witnesses.',
+    title: 'ServiceTrack — Track Your Activity',
+    description: 'A simple and beautiful activity tracker to manage your goals and time.',
     images: ['/og-image.jpg'],
   },
 };

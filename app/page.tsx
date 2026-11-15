@@ -9,9 +9,7 @@ import { ThemeLangToggle } from '@/components/ui/ThemeLangToggle';
 import {
   Clock,
   BookOpen,
-  Users,
   BarChart3,
-  Heart,
   Sparkles,
   Menu,
   X,
@@ -20,6 +18,7 @@ import {
   TrendingUp,
   Shield,
   ArrowRight,
+  MessageCircle,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -54,15 +53,14 @@ export default function LandingPage() {
     { icon: CalendarDays, title: tr('landing_feat_reports'), description: tr('landing_feat_reports_desc') },
     { icon: BarChart3, title: tr('landing_feat_analytics'), description: tr('landing_feat_analytics_desc') },
     { icon: Shield, title: tr('landing_feat_privacy'), description: tr('landing_feat_privacy_desc') },
-    { icon: Heart, title: tr('landing_feat_free'), description: tr('landing_feat_free_desc') },
-    { icon: Sparkles, title: tr('landing_feat_ai'), description: tr('landing_feat_ai_desc') },
+    { icon: MessageCircle, title: tr('landing_feat_ai'), description: tr('landing_feat_ai_desc') },
   ];
 
   const STATS = [
-    { value: '100%', label: tr('landing_stat_free'), icon: Heart },
+    { value: '24/7', label: tr('landing_stat_free'), icon: Clock },
     { value: '0', label: tr('landing_stat_ads'), icon: Shield },
-    { value: '24/7', label: tr('landing_stat_anywhere'), icon: Clock },
-    { value: '∞', label: tr('landing_stat_unlimited'), icon: CalendarDays },
+    { value: '∞', label: tr('landing_stat_anywhere'), icon: CalendarDays },
+    { value: '∞', label: tr('landing_stat_unlimited'), icon: TrendingUp },
   ];
 
   return (
@@ -250,7 +248,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* S-21 Card Preview */}
+      {/* Monthly Report Preview */}
       <section className="py-20 md:py-24">
         <div className="container-servicetrack">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
